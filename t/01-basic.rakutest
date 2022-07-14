@@ -1,0 +1,8 @@
+use Test;
+use Edit::Files;
+
+plan 1;
+
+ok MY::<&edit-files>, 'did edit-files get exported';
+
+# vim: expandtab shiftwidth=4

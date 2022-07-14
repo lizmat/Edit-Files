@@ -1,0 +1,25 @@
+{
+  "auth": "zef:lizmat",
+  "authors": [
+    "Elizabeth Mattijsen"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "edit a given set of files",
+  "license": "Artistic-2.0",
+  "name": "Edit::Files",
+  "perl": "6.d",
+  "provides": {
+    "Edit::Files": "lib/Edit/Files.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/Edit-Files.git",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}

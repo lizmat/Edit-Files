@@ -18,6 +18,7 @@ my sub edit-files(
 
 my sub vi(@specs, $tag)   { vim @specs, $tag, 'vi'   }
 my sub view(@specs, $tag) { vim @specs, $tag, 'view' }
+my sub nvim(@specs, $tag) { vim @specs, $tag, 'nvim' }
 
 my sub vim(@specs, $tag is copy, $editor = 'vim') {
     $tag = " " without $tag;

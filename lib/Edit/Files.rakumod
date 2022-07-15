@@ -16,7 +16,7 @@ my sub edit-files(
     }
 }
 
-my sub vi(@specs, $tag)   { vim @specs, $tag, 'vi'   }
+my sub vi(  @specs, $tag) { vim @specs, $tag, 'vi'   }
 my sub view(@specs, $tag) { vim @specs, $tag, 'view' }
 my sub nvim(@specs, $tag) { vim @specs, $tag, 'nvim' }
 
@@ -104,7 +104,12 @@ An optional tag to be added to each location specified.  Defaults to C<" ">
 
 =head1 SUPPORTED EDITORS
 
-The C<vi>, C<vim> and C<view> editors are supported.
+These editors are currently supported:
+
+=item vi
+=item vim
+=item view
+=item nvim
 
 =head1 SUPPORTING YOUR OWN EDITOR
 

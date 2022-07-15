@@ -2,6 +2,9 @@ Revision history for Edit-Files
 
 {{$NEXT}}
 
+0.0.3  2022-07-15T17:43:03+02:00
+    - Add support for "nvim" editor, SmokeMachine++
+
 0.0.2  2022-07-15T10:30:57+02:00
     - Add editors "vi" and "view" as an alternative to "vim"
     - Add proper support for additional (ad-hoc) editors

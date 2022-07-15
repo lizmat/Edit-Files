@@ -59,7 +59,15 @@ An optional tag to be added to each location specified. Defaults to `" "` (aka a
 SUPPORTED EDITORS
 =================
 
-The `vi`, `vim` and `view` editors are supported.
+These editors are currently supported:
+
+  * vi
+
+  * vim
+
+  * view
+
+  * nvim
 
 SUPPORTING YOUR OWN EDITOR
 ==========================

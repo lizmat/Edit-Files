@@ -1,8 +1,15 @@
 use Test;
 use Edit::Files;
 
-plan 1;
+plan 3;
 
 ok MY::<&edit-files>, 'did edit-files get exported';
+
+my sub fedit(@files, $tag) {
+    is-deeply @files, [<foo bar>], 'did we get the right files';
+    is $tag, "baz", 'did we get the right tag';
+}
+
+edit-files <foo bar>, :tag<baz>, :editor(&fedit);
 
 # vim: expandtab shiftwidth=4

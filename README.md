@@ -46,10 +46,41 @@ The files can be specified in 3 ways:
 
   * a Pair with filename as key, and a line number => column Pair as value
 
+The following additional optional named arguments can be specified:
+
+### :editor
+
+Specifies the editor to be used. Defaults to the contents of `$*EDITOR` or `%*ENV<EDITOR>` or 'vim'.
+
+### :tag
+
+An optional tag to be added to each location specified. Defaults to `" "` (aka a space).
+
 SUPPORTED EDITORS
 =================
 
-At this writing, only `vim` is supported.
+The `vi`, `vim` and `view` editors are supported.
+
+SUPPORTING YOUR OWN EDITOR
+==========================
+
+```raku
+use Edit::Files;
+
+my sub feditor(@specs, $tag) {
+    # handle specs
+    run 'feditor', ...
+}
+
+edit-files <foo bar>, :editor(&feditor); # edit "foo" and "bar" with "feditor"
+```
+
+You can add your own editor to the list of editors supported by `Edit::Files` by creating a `sub` that accepts an array with file / line / column specifications and a tag to be applied. Then you can specify that subroutine in the `:editor` argument to `edit-files`.
+
+ADDING AN EDITOR TO THIS DISTRIBUTION
+=====================================
+
+Create a `sub` as described above, and create a [Pull Request](https://github.com/lizmat/Edit-Files/pulls) to have that subroutine added to this distribution.
 
 ACKNOWLEDGEMENTS
 ================

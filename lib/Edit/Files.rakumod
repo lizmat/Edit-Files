@@ -3,8 +3,12 @@ my sub edit-files(
   :$editor is copy,
   :$tag,
 ) is export {
-    $editor = $*EDITOR // %*ENV<EDITOR> // 'vim' without $editor;
-    with ::('&' ~ $editor) -> &edit {
+    $editor  = $*EDITOR // %*ENV<EDITOR> // 'vim' without $editor;
+
+    if Callable.ACCEPTS($editor) {
+        $editor(@specs, $tag)
+    }
+    orwith ::('&' ~ $editor) -> &edit {
         edit(@specs, $tag);
     }
     else {
@@ -12,12 +16,16 @@ my sub edit-files(
     }
 }
 
-my sub term:<nano>() { use nqp; nqp::time }
+my sub vi(@specs, $tag)   { vim @specs, $tag, 'vi'   }
+my sub view(@specs, $tag) { vim @specs, $tag, 'view' }
 
-my sub vim(@specs, $tag is copy) {
+my sub vim(@specs, $tag is copy, $editor = 'vim') {
     $tag = " " without $tag;
 
-    my $tmpfile := $*TMPDIR.add(nano ~ '.vimerr');
+    my $tmpfile := do {
+        use nqp;
+        $*TMPDIR.add(nqp::time() ~ '.vim-q')
+    }
     LEAVE $tmpfile.unlink if $tmpfile.e;
 
     $tmpfile.spurt: @specs.map(-> $spec {
@@ -29,7 +37,7 @@ my sub vim(@specs, $tag is copy) {
         ) ~ ":$tag\n";
     }).join;
 
-    run 'vim', '-q', $tmpfile.absolute;
+    run $editor, '-q', $tmpfile.absolute;
 }
 
 =begin pod
@@ -81,9 +89,48 @@ The files can be specified in 3 ways:
 
 =item a Pair with filename as key, and a line number => column Pair as value
 
+The following additional optional named arguments can be specified:
+
+=head3 :editor
+
+Specifies the editor to be used.  Defaults to the contents of C<$*EDITOR> or
+C<%*ENV<EDITOR>> or 'vim'.
+
+=head3 :tag
+
+An optional tag to be added to each location specified.  Defaults to C<" ">
+(aka a space).
+
 =head1 SUPPORTED EDITORS
 
-At this writing, only C<vim> is supported.
+The C<vi>, C<vim> and C<view> editors are supported.
+
+=head1 SUPPORTING YOUR OWN EDITOR
+
+=begin code :lang<raku>
+
+use Edit::Files;
+
+my sub feditor(@specs, $tag) {
+    # handle specs
+    run 'feditor', ...
+}
+
+edit-files <foo bar>, :editor(&feditor); # edit "foo" and "bar" with "feditor"
+
+=end code
+
+You can add your own editor to the list of editors supported by
+C<Edit::Files> by creating a C<sub> that accepts an array with
+file / line / column specifications and a tag to be applied.
+Then you can specify that subroutine in the C<:editor> argument
+to C<edit-files>.
+
+=head1 ADDING AN EDITOR TO THIS DISTRIBUTION
+
+Create a C<sub> as described above, and create a
+L<Pull Request|https://github.com/lizmat/Edit-Files/pulls> to have that
+subroutine added to this distribution.
 
 =head1 ACKNOWLEDGEMENTS
 

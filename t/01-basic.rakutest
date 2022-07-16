@@ -11,5 +11,6 @@ my sub fedit(@files, $tag) {
 }
 
 edit-files <foo bar>, :tag<baz>, :editor(&fedit);
+edit-files (), :tag<baz>, :editor(&fedit);  # should not call fedit
 
 # vim: expandtab shiftwidth=4

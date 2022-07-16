@@ -6,10 +6,10 @@ my sub edit-files(
     $editor  = $*EDITOR // %*ENV<EDITOR> // 'vim' without $editor;
 
     if Callable.ACCEPTS($editor) {
-        $editor(@specs, $tag)
+        $editor(@specs, $tag) if @specs;
     }
     orwith ::('&' ~ $editor) -> &edit {
-        edit(@specs, $tag);
+        edit(@specs, $tag) if @specs;
     }
     else {
         die "Editor '$editor' is not supported";

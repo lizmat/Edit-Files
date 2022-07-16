@@ -2,6 +2,9 @@ Revision history for Edit-Files
 
 {{$NEXT}}
 
+0.0.4  2022-07-16T12:17:25+02:00
+    - Don't bother calling the editor if there's nothing to edit
+
 0.0.3  2022-07-15T17:43:03+02:00
     - Add support for "nvim" editor, SmokeMachine++
 

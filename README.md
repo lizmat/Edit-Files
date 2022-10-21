@@ -90,6 +90,14 @@ ADDING AN EDITOR TO THIS DISTRIBUTION
 
 Create a `sub` as described above, and create a [Pull Request](https://github.com/lizmat/Edit-Files/pulls) to have that subroutine added to this distribution.
 
+CAVEATS
+=======
+
+Redirected STDIN
+----------------
+
+If `STDIN` was redirected, then the `$*IN` handle will be closed, and be opened again with a TTY (by opening `/dev/tty`). This may not work on some operating systems, most notably Windows.
+
 ACKNOWLEDGEMENTS
 ================
 

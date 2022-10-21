@@ -38,7 +38,15 @@ my sub vim(@specs, $tag is copy, $editor = 'vim') {
         ) ~ ":$tag\n";
     }).join;
 
-    run $editor, '-q', $tmpfile.absolute;
+    # Make sure we have a TTY connected to STDIN
+    if $*IN.t {
+        run $editor, '-q', $tmpfile.absolute;
+    }
+    else {
+        my $*IN = open "/dev/tty";  # XXX not sure this works on Windows
+        run $editor, '-q', $tmpfile.absolute;
+    }
+
 }
 
 =begin pod
@@ -137,6 +145,14 @@ to C<edit-files>.
 Create a C<sub> as described above, and create a
 L<Pull Request|https://github.com/lizmat/Edit-Files/pulls> to have that
 subroutine added to this distribution.
+
+=head1 CAVEATS
+
+=head2 Redirected STDIN
+
+If C<STDIN> was redirected, then the C<$*IN> handle will be closed, and be
+opened again with a TTY (by opening C</dev/tty>).  This may not work on
+some operating systems, most notably Windows.
 
 =head1 ACKNOWLEDGEMENTS
 

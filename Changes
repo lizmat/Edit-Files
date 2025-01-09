@@ -1,6 +1,8 @@
 Revision history for Edit-Files
 
 {{$NEXT}}
+    - Add CI badge for each OS
+    - Update copyright year
 
 0.0.5  2022-10-21T19:55:21+02:00
     - Make sure STDIN is connected to a TTY before calling vim

@@ -1,3 +1,4 @@
 .precomp/
 /Edit-Files-*
 /releases/
+*.rakucov
